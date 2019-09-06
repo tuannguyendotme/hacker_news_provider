@@ -9,7 +9,7 @@ class NewestFeedService with ChangeNotifier {
   NewestFeedService(this.client);
 
   Future<void> fetch() async {
-    final feed = await client.news();
+    final feed = await client.newest();
 
     items = feed.items;
     notifyListeners();

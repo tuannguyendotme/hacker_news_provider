@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-
-import 'package:provider/provider.dart';
-
-import 'package:hacker_news_provider/services/news_feed_service.dart';
-import 'package:hacker_news_provider/widgets/feed_item_list_tile.dart';
+import 'package:hacker_news_provider/screens/newest_screen.dart';
+import 'package:hacker_news_provider/screens/news_screen.dart';
 
 class MainScreen extends StatefulWidget {
   static const String routeName = 'main';
@@ -12,16 +9,19 @@ class MainScreen extends StatefulWidget {
   _MainScreenState createState() => _MainScreenState();
 }
 
-class _MainScreenState extends State<MainScreen> {
-  NewsFeedService _service;
-  Future _newsFuture;
+class _MainScreenState extends State<MainScreen>
+    with SingleTickerProviderStateMixin {
+  final List<Widget> _screens = [
+    NewestScreen(),
+    NewsScreen(),
+  ];
+  TabController _tabController;
 
   @override
   void initState() {
     super.initState();
 
-    _service = Provider.of<NewsFeedService>(context, listen: false);
-    _newsFuture = _service.fetch();
+    _tabController = TabController(length: _screens.length, vsync: this);
   }
 
   @override
@@ -30,23 +30,33 @@ class _MainScreenState extends State<MainScreen> {
       appBar: AppBar(
         title: Text('Hacker News'),
       ),
-      body: FutureBuilder(
-        initialData: [],
-        future: _newsFuture,
-        builder: (context, snapshot) =>
-            snapshot.connectionState == ConnectionState.waiting
-                ? Center(
-                    child: CircularProgressIndicator(),
-                  )
-                : Consumer<NewsFeedService>(
-                    builder: (context, service, child) => ListView.builder(
-                        itemCount: service.items.length,
-                        itemBuilder: (context, index) {
-                          final item = service.items[index];
-
-                          return FeedItemListTile(item);
-                        }),
-                  ),
+      body: TabBarView(
+        children: _screens,
+        controller: _tabController,
+      ),
+      bottomNavigationBar: Material(
+        color: Colors.blue,
+        child: TabBar(
+          controller: _tabController,
+          tabs: <Widget>[
+            Tab(
+              child: Column(
+                children: <Widget>[
+                  Icon(Icons.trending_up),
+                  Text('Newest'),
+                ],
+              ),
+            ),
+            Tab(
+              child: Column(
+                children: <Widget>[
+                  Icon(Icons.new_releases),
+                  Text('News'),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
