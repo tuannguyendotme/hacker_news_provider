@@ -4,6 +4,7 @@ import 'package:hnpwa_client/hnpwa_client.dart';
 import 'package:provider/provider.dart';
 
 import 'package:hacker_news_provider/services/news_feed_service.dart';
+import 'package:hacker_news_provider/services/newest_feed_service.dart';
 import 'package:hacker_news_provider/screens/main_screen.dart';
 
 void main() => runApp(MyApp());
@@ -19,6 +20,10 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProxyProvider<HnpwaClient, NewsFeedService>(
           builder: (context, client, newsFeedService) =>
               NewsFeedService(client),
+        ),
+        ChangeNotifierProxyProvider<HnpwaClient, NewestFeedService>(
+          builder: (context, client, newsFeedService) =>
+              NewestFeedService(client),
         )
       ],
       child: MaterialApp(

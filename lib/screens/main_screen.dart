@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:hacker_news_provider/services/news_feed_service.dart';
+import 'package:hacker_news_provider/widgets/feed_item_list_tile.dart';
 
 class MainScreen extends StatefulWidget {
   static const String routeName = 'main';
@@ -43,14 +44,7 @@ class _MainScreenState extends State<MainScreen> {
                         itemBuilder: (context, index) {
                           final item = service.items[index];
 
-                          return ListTile(
-                            leading: CircleAvatar(
-                              child: Text(item.commentsCount.toString()),
-                            ),
-                            title: Text(item.title),
-                            subtitle: Text(
-                                '${item.timeAgo} by ${item.user != null ? item.user : 'Unknown User'}'),
-                          );
+                          return FeedItemListTile(item);
                         }),
                   ),
       ),
