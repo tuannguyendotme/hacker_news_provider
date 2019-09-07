@@ -31,24 +31,27 @@ class _NewestScreenState extends State<NewestScreen> {
     return FutureBuilder(
       initialData: [],
       future: _newestFuture,
-      builder: (context, snapshot) => snapshot.connectionState ==
-              ConnectionState.waiting
-          ? Center(
-              child: CircularProgressIndicator(),
-            )
-          : Consumer<NewestFeedService>(
-              builder: (context, service, child) => RefreshIndicator(
-                child: ListView.builder(
-                  itemCount: service.items.length,
-                  itemBuilder: (context, index) {
-                    final item = service.items[index];
+      builder: (context, snapshot) =>
+          snapshot.connectionState == ConnectionState.waiting
+              ? Center(
+                  child: CircularProgressIndicator(),
+                )
+              : Consumer<NewestFeedService>(
+                  builder: (context, service, child) => RefreshIndicator(
+                    child: ListView.builder(
+                      itemCount: service.items.length,
+                      itemBuilder: (context, index) {
+                        final item = service.items[index];
 
-                    return FeedItemListTile(item, widget.onFeedItemLongPress);
-                  },
+                        return FeedItemListTile(
+                          feedItem: item,
+                          onLongPress: widget.onFeedItemLongPress,
+                        );
+                      },
+                    ),
+                    onRefresh: _service.fetch,
+                  ),
                 ),
-                onRefresh: _service.fetch,
-              ),
-            ),
     );
   }
 }

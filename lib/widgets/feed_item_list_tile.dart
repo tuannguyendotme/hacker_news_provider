@@ -3,21 +3,24 @@ import 'package:flutter/material.dart';
 import 'package:hnpwa_client/hnpwa_client.dart';
 
 class FeedItemListTile extends StatelessWidget {
-  final FeedItem item;
+  final FeedItem feedItem;
   final Function onLongPress;
 
-  FeedItemListTile(this.item, this.onLongPress);
+  FeedItemListTile({
+    this.feedItem,
+    this.onLongPress,
+  });
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
       leading: CircleAvatar(
-        child: Text(item.points.toString()),
+        child: Text(feedItem.points.toString()),
       ),
-      title: Text(item.title),
+      title: Text(feedItem.title),
       subtitle: Text(
-          '${item.timeAgo} by ${item.user != null ? item.user : 'Unknown User'}'),
-      onLongPress: () => this.onLongPress(item),
+          '${feedItem.timeAgo} by ${feedItem.user != null ? feedItem.user : 'Unknown User'}'),
+      onLongPress: () => this.onLongPress(feedItem),
     );
   }
 }
