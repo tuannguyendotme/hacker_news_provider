@@ -14,7 +14,8 @@ class NewsScreen extends StatefulWidget {
   _NewsScreenState createState() => _NewsScreenState();
 }
 
-class _NewsScreenState extends State<NewsScreen> {
+class _NewsScreenState extends State<NewsScreen>
+    with AutomaticKeepAliveClientMixin {
   NewsFeedService _service;
   Future _newsFuture;
 
@@ -28,6 +29,8 @@ class _NewsScreenState extends State<NewsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
+
     return FutureBuilder(
       initialData: [],
       future: _newsFuture,
@@ -54,4 +57,7 @@ class _NewsScreenState extends State<NewsScreen> {
                 ),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

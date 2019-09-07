@@ -14,7 +14,8 @@ class NewestScreen extends StatefulWidget {
   _NewestScreenState createState() => _NewestScreenState();
 }
 
-class _NewestScreenState extends State<NewestScreen> {
+class _NewestScreenState extends State<NewestScreen>
+    with AutomaticKeepAliveClientMixin {
   NewestFeedService _service;
   Future _newestFuture;
 
@@ -28,6 +29,8 @@ class _NewestScreenState extends State<NewestScreen> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
+
     return FutureBuilder(
       initialData: [],
       future: _newestFuture,
@@ -54,4 +57,7 @@ class _NewestScreenState extends State<NewestScreen> {
                 ),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }
