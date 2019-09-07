@@ -6,6 +6,10 @@ import 'package:hacker_news_provider/services/newest_feed_service.dart';
 import 'package:hacker_news_provider/widgets/feed_item_list_tile.dart';
 
 class NewestScreen extends StatefulWidget {
+  final Function onFeedItemLongPress;
+
+  const NewestScreen(this.onFeedItemLongPress);
+
   @override
   _NewestScreenState createState() => _NewestScreenState();
 }
@@ -27,20 +31,24 @@ class _NewestScreenState extends State<NewestScreen> {
     return FutureBuilder(
       initialData: [],
       future: _newestFuture,
-      builder: (context, snapshot) =>
-          snapshot.connectionState == ConnectionState.waiting
-              ? Center(
-                  child: CircularProgressIndicator(),
-                )
-              : Consumer<NewestFeedService>(
-                  builder: (context, service, child) => ListView.builder(
-                      itemCount: service.items.length,
-                      itemBuilder: (context, index) {
-                        final item = service.items[index];
+      builder: (context, snapshot) => snapshot.connectionState ==
+              ConnectionState.waiting
+          ? Center(
+              child: CircularProgressIndicator(),
+            )
+          : Consumer<NewestFeedService>(
+              builder: (context, service, child) => RefreshIndicator(
+                child: ListView.builder(
+                  itemCount: service.items.length,
+                  itemBuilder: (context, index) {
+                    final item = service.items[index];
 
-                        return FeedItemListTile(item);
-                      }),
+                    return FeedItemListTile(item, widget.onFeedItemLongPress);
+                  },
                 ),
+                onRefresh: _service.fetch,
+              ),
+            ),
     );
   }
 }
