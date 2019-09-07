@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:hacker_news_provider/screens/favorite_screen.dart';
 import 'package:hacker_news_provider/screens/newest_screen.dart';
 import 'package:hacker_news_provider/screens/news_screen.dart';
+import 'package:hacker_news_provider/screens/settings_screen.dart';
 
 class MainScreen extends StatefulWidget {
   static const String routeName = 'main';
@@ -14,6 +16,8 @@ class _MainScreenState extends State<MainScreen>
   final List<Widget> _screens = [
     NewestScreen(),
     NewsScreen(),
+    FavoriteScreen(),
+    SettingsScreen(),
   ];
   TabController _tabController;
 
@@ -52,6 +56,22 @@ class _MainScreenState extends State<MainScreen>
                 children: <Widget>[
                   Icon(Icons.new_releases),
                   Text('News'),
+                ],
+              ),
+            ),
+            Tab(
+              child: Column(
+                children: <Widget>[
+                  Icon(Icons.favorite),
+                  Text('Favorite'),
+                ],
+              ),
+            ),
+            Tab(
+              child: Column(
+                children: <Widget>[
+                  Icon(Icons.settings),
+                  Text('Settings'),
                 ],
               ),
             ),
