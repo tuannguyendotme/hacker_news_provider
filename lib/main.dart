@@ -38,8 +38,8 @@ class MyApp extends StatelessWidget {
         builder: (context, settingsService, child) => MaterialApp(
           title: 'Hacker News',
           theme: ThemeData(
-            primaryColor: Colors.blue,
-            accentColor: Colors.blue,
+            primaryColor: Colors.orange,
+            accentColor: Colors.orange,
             brightness: settingsService.value.useDarkTheme
                 ? Brightness.dark
                 : Brightness.light,

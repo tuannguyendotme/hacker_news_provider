@@ -19,4 +19,13 @@ class FavoritesService with ChangeNotifier {
     _items.add(item);
     notifyListeners();
   }
+
+  void removeItem(FeedItem item) {
+    final index = _items.indexWhere((i) => i.id == item.id);
+
+    if (index != -1) {
+      _items.removeAt(index);
+      notifyListeners();
+    }
+  }
 }

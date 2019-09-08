@@ -37,7 +37,8 @@ class _MainScreenState extends State<MainScreen>
         children: [
           NewsScreen((item) => _showBottomSheet(context, item)),
           NewestScreen((item) => _showBottomSheet(context, item)),
-          FavoritesScreen(),
+          FavoritesScreen(
+              (item) => _showBottomSheet(context, item, isRemove: true)),
           SettingsScreen(),
         ],
         controller: _tabController,
@@ -50,7 +51,7 @@ class _MainScreenState extends State<MainScreen>
     return SizedBox(
       height: 80,
       child: Material(
-        color: Colors.blue,
+        color: Theme.of(context).primaryColor,
         child: TabBar(
           controller: _tabController,
           tabs: <Widget>[
@@ -77,7 +78,7 @@ class _MainScreenState extends State<MainScreen>
               child: Column(
                 children: <Widget>[
                   Icon(Icons.favorite),
-                  Text('Favorite'),
+                  Text('Favorites'),
                 ],
               ),
             ),
@@ -95,7 +96,8 @@ class _MainScreenState extends State<MainScreen>
     );
   }
 
-  void _showBottomSheet(BuildContext context, FeedItem item) {
+  void _showBottomSheet(BuildContext context, FeedItem item,
+      {bool isRemove = false}) {
     showModalBottomSheet(
       context: context,
       builder: (context) => Container(
@@ -112,13 +114,17 @@ class _MainScreenState extends State<MainScreen>
           child: Column(
             children: <Widget>[
               ListTile(
-                leading: Icon(Icons.favorite),
-                title: Text('Add to favorite'),
+                leading: Icon(isRemove ? Icons.delete : Icons.favorite),
+                title: Text('${isRemove ? 'Remove from' : 'Add to'} favorites'),
                 onTap: () {
                   final favoritesService =
                       Provider.of<FavoritesService>(context, listen: false);
 
-                  favoritesService.addItem(item);
+                  if (isRemove) {
+                    favoritesService.removeItem(item);
+                  } else {
+                    favoritesService.addItem(item);
+                  }
 
                   Navigator.of(context).pop();
                 },

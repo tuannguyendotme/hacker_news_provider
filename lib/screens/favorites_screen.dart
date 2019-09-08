@@ -6,6 +6,10 @@ import 'package:provider/provider.dart';
 import 'package:hacker_news_provider/services/favorites_service.dart';
 
 class FavoritesScreen extends StatefulWidget {
+  final Function onFeedItemLongPress;
+
+  const FavoritesScreen(this.onFeedItemLongPress);
+
   @override
   _FavoritesScreenState createState() => _FavoritesScreenState();
 }
@@ -24,6 +28,7 @@ class _FavoritesScreenState extends State<FavoritesScreen>
           itemCount: items.length,
           itemBuilder: (context, index) => FeedItemListTile(
             feedItem: items[index],
+            onLongPress: widget.onFeedItemLongPress,
           ),
         );
       },
