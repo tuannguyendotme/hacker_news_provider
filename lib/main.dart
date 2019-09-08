@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hacker_news_provider/services/favorites_service.dart';
 
 import 'package:hnpwa_client/hnpwa_client.dart';
 import 'package:provider/provider.dart';
@@ -20,6 +21,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider.value(
           value: SettingsService(),
+        ),
+        ChangeNotifierProvider.value(
+          value: FavoritesService(),
         ),
         ChangeNotifierProxyProvider<HnpwaClient, NewsFeedService>(
           builder: (context, client, newsFeedService) =>

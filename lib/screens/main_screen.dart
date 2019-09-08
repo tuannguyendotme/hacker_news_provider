@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:hacker_news_provider/screens/favorite_screen.dart';
+import 'package:hacker_news_provider/screens/favorites_screen.dart';
 import 'package:hacker_news_provider/screens/newest_screen.dart';
 import 'package:hacker_news_provider/screens/news_screen.dart';
 import 'package:hacker_news_provider/screens/settings_screen.dart';
+import 'package:hacker_news_provider/services/favorites_service.dart';
 import 'package:hnpwa_client/hnpwa_client.dart';
+import 'package:provider/provider.dart';
 import 'package:share/share.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -35,7 +37,7 @@ class _MainScreenState extends State<MainScreen>
         children: [
           NewsScreen((item) => _showBottomSheet(context, item)),
           NewestScreen((item) => _showBottomSheet(context, item)),
-          FavoriteScreen(),
+          FavoritesScreen(),
           SettingsScreen(),
         ],
         controller: _tabController,
@@ -112,6 +114,14 @@ class _MainScreenState extends State<MainScreen>
               ListTile(
                 leading: Icon(Icons.favorite),
                 title: Text('Add to favorite'),
+                onTap: () {
+                  final favoritesService =
+                      Provider.of<FavoritesService>(context, listen: false);
+
+                  favoritesService.addItem(item);
+
+                  Navigator.of(context).pop();
+                },
               ),
               ListTile(
                 leading: Icon(Icons.link),

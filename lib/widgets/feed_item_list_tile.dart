@@ -7,7 +7,7 @@ class FeedItemListTile extends StatelessWidget {
   final Function onLongPress;
 
   FeedItemListTile({
-    this.feedItem,
+    @required this.feedItem,
     this.onLongPress,
   });
 
@@ -20,7 +20,11 @@ class FeedItemListTile extends StatelessWidget {
       title: Text(feedItem.title),
       subtitle: Text(
           '${feedItem.timeAgo} by ${feedItem.user != null ? feedItem.user : 'Unknown User'}'),
-      onLongPress: () => this.onLongPress(feedItem),
+      onLongPress: () {
+        if (this.onLongPress != null) {
+          this.onLongPress(feedItem);
+        }
+      },
     );
   }
 }
