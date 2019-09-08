@@ -4,6 +4,8 @@ import 'package:hacker_news_provider/screens/newest_screen.dart';
 import 'package:hacker_news_provider/screens/news_screen.dart';
 import 'package:hacker_news_provider/screens/settings_screen.dart';
 import 'package:hnpwa_client/hnpwa_client.dart';
+import 'package:share/share.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class MainScreen extends StatefulWidget {
   static const String routeName = 'main';
@@ -113,11 +115,21 @@ class _MainScreenState extends State<MainScreen>
               ),
               ListTile(
                 leading: Icon(Icons.link),
-                title: Text('Open link'),
+                title: Text('Open in browser'),
+                onTap: () async {
+                  Navigator.of(context).pop();
+
+                  await launch(item.url);
+                },
               ),
               ListTile(
                 leading: Icon(Icons.share),
                 title: Text('Share'),
+                onTap: () {
+                  Navigator.of(context).pop();
+
+                  Share.share(item.url);
+                },
               ),
             ],
           ),
