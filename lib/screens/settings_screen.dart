@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:hacker_news_provider/services/settings_service.dart';
+import 'package:provider/provider.dart';
 
 class SettingsScreen extends StatefulWidget {
   @override
@@ -11,7 +13,21 @@ class _SettingsScreenState extends State<SettingsScreen>
   Widget build(BuildContext context) {
     super.build(context);
 
-    return Container();
+    final SettingsService settingsService =
+        Provider.of<SettingsService>(context);
+
+    return ListView(
+      children: <Widget>[
+        SwitchListTile(
+          title: Text('Use dark theme'),
+          value: settingsService.value.useDarkTheme,
+          activeColor: Theme.of(context).accentColor,
+          onChanged: (bool newValue) {
+            settingsService.toggleTheme();
+          },
+        )
+      ],
+    );
   }
 
   @override
