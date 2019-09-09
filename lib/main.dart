@@ -32,9 +32,6 @@ class MyApp extends StatelessWidget {
         Provider.value(
           value: StorageService(prefs),
         ),
-        ChangeNotifierProvider.value(
-          value: SettingsService(),
-        ),
         ChangeNotifierProxyProvider<HnpwaClient, NewsFeedService>(
           builder: (context, client, newsFeedService) =>
               NewsFeedService(client),
@@ -44,12 +41,21 @@ class MyApp extends StatelessWidget {
               NewestFeedService(client),
         ),
         ChangeNotifierProxyProvider<StorageService, FavoritesService>(
-            builder: (context, storageService, favoritesService) {
-          favoritesService = FavoritesService(storageService);
-          favoritesService.loadFavorites();
+          builder: (context, storageService, favoritesService) {
+            favoritesService = FavoritesService(storageService);
+            favoritesService.loadFavorites();
 
-          return favoritesService;
-        }),
+            return favoritesService;
+          },
+        ),
+        ChangeNotifierProxyProvider<StorageService, SettingsService>(
+          builder: (context, storageService, settingsService) {
+            settingsService = SettingsService(storageService);
+            settingsService.loadSettings();
+
+            return settingsService;
+          },
+        ),
       ],
       child: Consumer<SettingsService>(
         builder: (context, settingsService, child) => MaterialApp(

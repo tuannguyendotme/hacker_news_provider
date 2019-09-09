@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
+
+import 'package:hnpwa_client/hnpwa_client.dart';
+import 'package:provider/provider.dart';
+import 'package:share/share.dart';
+import 'package:url_launcher/url_launcher.dart';
+
 import 'package:hacker_news_provider/screens/favorites_screen.dart';
 import 'package:hacker_news_provider/screens/newest_screen.dart';
 import 'package:hacker_news_provider/screens/news_screen.dart';
 import 'package:hacker_news_provider/screens/settings_screen.dart';
 import 'package:hacker_news_provider/services/favorites_service.dart';
-import 'package:hnpwa_client/hnpwa_client.dart';
-import 'package:provider/provider.dart';
-import 'package:share/share.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class MainScreen extends StatefulWidget {
   static const String routeName = 'main';

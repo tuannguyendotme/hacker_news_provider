@@ -4,8 +4,11 @@ import 'dart:core';
 import 'package:hnpwa_client/hnpwa_client.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'package:hacker_news_provider/models/settings.dart';
+
 class StorageService {
   static final String _favoritesKey = 'favorites';
+  static final String _useDarkThemeKey = 'useDarkTheme';
 
   final SharedPreferences prefs;
 
@@ -39,11 +42,16 @@ class StorageService {
       return [];
     }
 
-    return itemsAsString.map((i) {
-      print(i);
-      print(json.decode(i));
+    return itemsAsString.map((i) => FeedItem.fromJson(json.decode(i))).toList();
+  }
 
-      return FeedItem.fromJson(json.decode(i));
-    }).toList();
+  Future<void> saveSettings(Settings settings) async {
+    await prefs.setBool(_useDarkThemeKey, settings.useDarkTheme);
+  }
+
+  Settings loadSettings() {
+    final Settings settings = Settings.initial();
+
+    return settings.copyWith(useDarkTheme: prefs.getBool(_useDarkThemeKey));
   }
 }

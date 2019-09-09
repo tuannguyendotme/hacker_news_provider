@@ -1,7 +1,8 @@
 import 'package:flutter/foundation.dart';
-import 'package:hacker_news_provider/app_exception.dart';
 
 import 'package:hnpwa_client/hnpwa_client.dart';
+
+import 'package:hacker_news_provider/app_exception.dart';
 
 class NewsFeedService with ChangeNotifier {
   final HnpwaClient client;

@@ -1,9 +1,10 @@
 import 'dart:collection';
 
 import 'package:flutter/foundation.dart';
-import 'package:hacker_news_provider/services/storage_service.dart';
 
 import 'package:hnpwa_client/hnpwa_client.dart';
+
+import 'package:hacker_news_provider/services/storage_service.dart';
 
 class FavoritesService with ChangeNotifier {
   final StorageService storageService;

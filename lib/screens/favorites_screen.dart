@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:hacker_news_provider/widgets/feed_item_list_tile.dart';
 
 import 'package:provider/provider.dart';
 
 import 'package:hacker_news_provider/services/favorites_service.dart';
+import 'package:hacker_news_provider/widgets/feed_item_list_tile.dart';
 
 class FavoritesScreen extends StatefulWidget {
   final Function onFeedItemLongPress;

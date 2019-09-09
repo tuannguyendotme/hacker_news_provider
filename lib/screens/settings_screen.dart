@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:hacker_news_provider/services/settings_service.dart';
+
 import 'package:provider/provider.dart';
+
+import 'package:hacker_news_provider/services/settings_service.dart';
 
 class SettingsScreen extends StatefulWidget {
   @override
