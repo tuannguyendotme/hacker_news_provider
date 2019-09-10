@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hacker_news_provider/services/settings_service.dart';
 
 import 'package:hnpwa_client/hnpwa_client.dart';
 import 'package:provider/provider.dart';
@@ -102,54 +103,59 @@ class _MainScreenState extends State<MainScreen>
       {bool isRemove = false}) {
     showModalBottomSheet(
       context: context,
-      builder: (context) => Container(
-        color: const Color(0xFF737373),
-        height: 200,
-        child: Container(
-          decoration: BoxDecoration(
-            color: Theme.of(context).canvasColor,
-            borderRadius: BorderRadius.only(
-              topLeft: const Radius.circular(10),
-              topRight: const Radius.circular(10),
+      builder: (context) => Consumer<SettingsService>(
+        builder: (context, settingsService, child) => Container(
+          color: settingsService.value.useDarkTheme
+              ? const Color(0xFF161616)
+              : const Color(0xFF737373),
+          height: 200,
+          child: Container(
+            decoration: BoxDecoration(
+              color: Theme.of(context).canvasColor,
+              borderRadius: BorderRadius.only(
+                topLeft: const Radius.circular(10),
+                topRight: const Radius.circular(10),
+              ),
             ),
-          ),
-          child: Column(
-            children: <Widget>[
-              ListTile(
-                leading: Icon(isRemove ? Icons.delete : Icons.favorite),
-                title: Text('${isRemove ? 'Remove from' : 'Add to'} favorites'),
-                onTap: () {
-                  final favoritesService =
-                      Provider.of<FavoritesService>(context, listen: false);
+            child: Column(
+              children: <Widget>[
+                ListTile(
+                  leading: Icon(isRemove ? Icons.delete : Icons.favorite),
+                  title:
+                      Text('${isRemove ? 'Remove from' : 'Add to'} favorites'),
+                  onTap: () {
+                    final favoritesService =
+                        Provider.of<FavoritesService>(context, listen: false);
 
-                  if (isRemove) {
-                    favoritesService.removeItem(item);
-                  } else {
-                    favoritesService.addItem(item);
-                  }
+                    if (isRemove) {
+                      favoritesService.removeItem(item);
+                    } else {
+                      favoritesService.addItem(item);
+                    }
 
-                  Navigator.of(context).pop();
-                },
-              ),
-              ListTile(
-                leading: Icon(Icons.link),
-                title: Text('Open in browser'),
-                onTap: () async {
-                  Navigator.of(context).pop();
+                    Navigator.of(context).pop();
+                  },
+                ),
+                ListTile(
+                  leading: Icon(Icons.link),
+                  title: Text('Open in browser'),
+                  onTap: () async {
+                    Navigator.of(context).pop();
 
-                  await launch(item.url);
-                },
-              ),
-              ListTile(
-                leading: Icon(Icons.share),
-                title: Text('Share'),
-                onTap: () {
-                  Navigator.of(context).pop();
+                    await launch(item.url);
+                  },
+                ),
+                ListTile(
+                  leading: Icon(Icons.share),
+                  title: Text('Share'),
+                  onTap: () {
+                    Navigator.of(context).pop();
 
-                  Share.share(item.url);
-                },
-              ),
-            ],
+                    Share.share(item.url);
+                  },
+                ),
+              ],
+            ),
           ),
         ),
       ),
