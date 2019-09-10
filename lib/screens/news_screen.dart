@@ -32,14 +32,17 @@ class _NewsScreenState extends State<NewsScreen>
     super.build(context);
 
     return FutureBuilder(
-      initialData: [],
-      future: _newsFuture,
-      builder: (context, snapshot) =>
-          snapshot.connectionState == ConnectionState.waiting
-              ? Center(
-                  child: CircularProgressIndicator(),
-                )
-              : snapshot.hasError
+        initialData: [],
+        future: _newsFuture,
+        builder: (context, snapshot) {
+          switch (snapshot.connectionState) {
+            case ConnectionState.waiting:
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+
+            case ConnectionState.done:
+              return snapshot.hasError
                   ? Center(
                       child: Text(snapshot.error.toString()),
                     )
@@ -58,8 +61,14 @@ class _NewsScreenState extends State<NewsScreen>
                         ),
                         onRefresh: _service.fetch,
                       ),
-                    ),
-    );
+                    );
+
+            default:
+              return Center(
+                child: Text('Something went wrong.'),
+              );
+          }
+        });
   }
 
   @override
