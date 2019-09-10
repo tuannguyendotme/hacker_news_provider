@@ -18,6 +18,7 @@ class _NewsScreenState extends State<NewsScreen>
     with AutomaticKeepAliveClientMixin {
   NewsFeedService _service;
   Future _newsFuture;
+  ScrollController _scrollController;
 
   @override
   void initState() {
@@ -25,6 +26,24 @@ class _NewsScreenState extends State<NewsScreen>
 
     _service = Provider.of<NewsFeedService>(context, listen: false);
     _newsFuture = _service.fetch();
+
+    _scrollController = ScrollController();
+    _scrollController.addListener(() {
+      if (_scrollController.position.pixels ==
+          _scrollController.position.maxScrollExtent) {
+        if (_service.hasMore) {
+          _service.fetch();
+          setState(() {});
+        }
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+
+    _scrollController.dispose();
   }
 
   @override
@@ -49,8 +68,15 @@ class _NewsScreenState extends State<NewsScreen>
                   : Consumer<NewsFeedService>(
                       builder: (context, service, child) => RefreshIndicator(
                         child: ListView.builder(
-                          itemCount: service.items.length,
+                          controller: _scrollController,
+                          itemCount: service.hasMore
+                              ? service.items.length + 1
+                              : service.items.length,
                           itemBuilder: (context, index) {
+                            if (index == service.items.length) {
+                              return Center(child: CircularProgressIndicator());
+                            }
+
                             final item = service.items[index];
 
                             return FeedItemListTile(
