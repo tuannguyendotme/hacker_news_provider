@@ -28,12 +28,11 @@ class _NewsScreenState extends State<NewsScreen>
     _newsFuture = _service.fetch();
 
     _scrollController = ScrollController();
-    _scrollController.addListener(() {
+    _scrollController.addListener(() async {
       if (_scrollController.position.pixels ==
           _scrollController.position.maxScrollExtent) {
         if (_service.hasMore) {
-          _service.fetch();
-          setState(() {});
+          await _service.fetch();
         }
       }
     });

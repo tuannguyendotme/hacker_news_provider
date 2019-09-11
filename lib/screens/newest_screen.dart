@@ -33,6 +33,7 @@ class _NewestScreenState extends State<NewestScreen>
           _scrollController.position.maxScrollExtent) {
         if (_service.hasMore) {
           _service.fetch();
+
           setState(() {});
         }
       }
