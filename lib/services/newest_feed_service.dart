@@ -7,22 +7,23 @@ import 'package:hnpwa_client/hnpwa_client.dart';
 import 'package:hacker_news_provider/app_exception.dart';
 
 class NewestFeedService with ChangeNotifier {
-  static final int _maxPage = 12;
-
   final HnpwaClient client;
 
   List<FeedItem> _items = [];
   int _currentPage = 1;
+  bool _hasMore = true;
 
   NewestFeedService(this.client);
 
-  bool get hasMore => _currentPage <= _maxPage;
+  bool get hasMore => _hasMore;
 
   UnmodifiableListView<FeedItem> get items => UnmodifiableListView(_items);
 
   Future<void> fetch() async {
     try {
-      final feed = await client.newest();
+      final feed = await client.newest(page: _currentPage);
+
+      _hasMore = feed.hasNextPage;
 
       _items.addAll(feed.items);
       notifyListeners();
