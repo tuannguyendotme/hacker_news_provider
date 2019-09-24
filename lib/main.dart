@@ -1,14 +1,10 @@
 import 'package:flutter/material.dart';
 
-import 'package:hnpwa_client/hnpwa_client.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'package:hacker_news_provider/services/news_feed_service.dart';
-import 'package:hacker_news_provider/services/newest_feed_service.dart';
+import 'package:hacker_news_provider/providers.dart';
 import 'package:hacker_news_provider/services/settings_service.dart';
-import 'package:hacker_news_provider/services/favorites_service.dart';
-import 'package:hacker_news_provider/services/storage_service.dart';
 import 'package:hacker_news_provider/screens/main_screen.dart';
 
 void main() async {
@@ -25,38 +21,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-      providers: [
-        Provider.value(
-          value: HnpwaClient(),
-        ),
-        Provider.value(
-          value: StorageService(prefs),
-        ),
-        ChangeNotifierProxyProvider<HnpwaClient, NewsFeedService>(
-          builder: (context, client, newsFeedService) =>
-              NewsFeedService(client),
-        ),
-        ChangeNotifierProxyProvider<HnpwaClient, NewestFeedService>(
-          builder: (context, client, newsFeedService) =>
-              NewestFeedService(client),
-        ),
-        ChangeNotifierProxyProvider<StorageService, FavoritesService>(
-          builder: (context, storageService, favoritesService) {
-            favoritesService = FavoritesService(storageService);
-            favoritesService.loadFavorites();
-
-            return favoritesService;
-          },
-        ),
-        ChangeNotifierProxyProvider<StorageService, SettingsService>(
-          builder: (context, storageService, settingsService) {
-            settingsService = SettingsService(storageService);
-            settingsService.loadSettings();
-
-            return settingsService;
-          },
-        ),
-      ],
+      providers: initializeProviders(prefs),
       child: Consumer<SettingsService>(
         builder: (context, settingsService, child) => MaterialApp(
           title: 'Hacker News',
