@@ -1,16 +1,18 @@
-# hacker_news_provider
+# Hacker News
 
-A new Flutter project.
+Yet another Hacker News app, now using Flutter.
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+This Hacker News app is implemented using Flutter (with Provider for state management).
 
-A few resources to get you started if this is your first Flutter project:
+Features:
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+- Display news/newest feed
+- Add/remove feed item to/from favorites
+- Open feed item in browser
+- Share feed item
+- Change theme (light to dark and vice versa) at runtime
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+![UI Dark](ui_dark.png?raw=true)
+![UI Light](ui_light.png?raw=true)
