@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:hacker_news_provider/services/settings_service.dart';
 
 import 'package:hnpwa_client/hnpwa_client.dart';
 import 'package:provider/provider.dart';
@@ -11,6 +10,7 @@ import 'package:hacker_news_provider/screens/newest_screen.dart';
 import 'package:hacker_news_provider/screens/news_screen.dart';
 import 'package:hacker_news_provider/screens/settings_screen.dart';
 import 'package:hacker_news_provider/services/favorites_service.dart';
+import 'package:hacker_news_provider/services/settings_service.dart';
 
 class MainScreen extends StatefulWidget {
   static const String routeName = 'main';
