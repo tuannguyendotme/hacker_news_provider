@@ -73,7 +73,12 @@ class _NewsScreenState extends State<NewsScreen>
                               : service.items.length,
                           itemBuilder: (context, index) {
                             if (index == service.items.length) {
-                              return Center(child: CircularProgressIndicator());
+                              return Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Center(
+                                  child: CircularProgressIndicator(),
+                                ),
+                              );
                             }
 
                             final item = service.items[index];
