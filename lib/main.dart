@@ -8,6 +8,7 @@ import 'package:hacker_news_provider/services/settings_service.dart';
 import 'package:hacker_news_provider/screens/main_screen.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   final SharedPreferences prefs = await SharedPreferences.getInstance();
 
   runApp(MyApp(prefs));
